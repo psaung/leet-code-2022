@@ -1,19 +1,33 @@
 package main
 
-func maxArea(height []int) int {
-	result, len := height[0], len(height)
 
-	for i := 0; i < len; i++ {
-		for j := i + 1; j < len; j++ {
-			min := height[i]
-			if min > height[j]  {
-				min = height[j]
-			}
-			if result < min * (j - 1) {
-				result = min * (j - 1)
-			}
+func min(x, y int) int {
+	if x < y {
+		return x
+	}
+	return y
+}
+
+func max(x, y int) int {
+	if x > y {
+		return x
+	}
+	return y
+}
+
+func maxArea(height []int) int {
+	result, start, end := 0, 0, len(height) - 1;
+
+	for start < end {
+		shortest := min(height[start], height[end]) 
+
+		result = max(result, shortest * (end - start))
+
+		if(height[start] < height[end]) {
+			start++;
+		} else {
+			end--;
 		}
 	}
-
 	return result
 }
